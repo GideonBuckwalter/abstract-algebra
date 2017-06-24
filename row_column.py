@@ -56,3 +56,9 @@ class Symbol:
 
     def pix_height(self):
         return PIX_HGT
+
+    def draw(self, abs_pos):
+        fill(0,0,255)
+        noStroke()
+        ellipseMode(CENTER)
+        ellipse(abs_pos.x, abs_pos.y, self.pix_width(), self.pix_height())

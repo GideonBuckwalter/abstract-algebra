@@ -29,13 +29,36 @@ class AbstractLoop:
                 func(getattr(slf.positive, "pix_" + dim_name),
                      getattr(slf.negative, "pix_" + dim_name)))
 
+    def draw(self, abs_pos):
+        self.render_loop(abs_pos)
+
+        vecs = self.rel_child_positions
+        kids = itertools.chain(self.positive, self.negative)
+        for vector, child in izip(vecs, kids):
+            child.draw(abs_pos + vector)
+
 
 class MLoop(AbstractLoop):
     _container = Column
     _primary_dimension = "height"
     _secondary_dimension = "width"
 
+    # METAPROGRAM AWAY IN FUTURE
+    def render_loop(self, abs_pos):
+        stroke(255, 255, 255)
+        noFill()
+        rect(abs_pos.x, abs_pos.y, self.pix_width(), self.pix_height())
+
 class ALoop(AbstractLoop):
     _container = Row
     _primary_dimension = "width"
     _secondary_dimension = "height"
+
+    # METAPROGRAM AWAY IN FUTURE
+    def render_loop(self, abs_pos):
+        stroke(255, 255, 255)
+        noFill()
+        rect(abs_pos.x, abs_pos.y, self.pix_width(), self.pix_height())
+
+
+
